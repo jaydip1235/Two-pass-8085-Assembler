@@ -3,33 +3,34 @@
 #include <math.h>
 #include <string.h>
 #include "../inc/hash_map_2.h"
+#include "../inc/utils.h"
 
-unsigned long long int string_to_int_convert(char* input)
-{
-	int i =0;
-	unsigned long long int result = 0;
-	int r = 0;
+// unsigned long long int string_to_int_convert(char* input)
+// {
+// 	int i =0;
+// 	unsigned long long int result = 0;
+// 	int r = 0;
 	
-	while(input[i]!='\0')
-	{
-		int temp = input[i];
-		result += temp * pow(100,r);
-		r++;
-		i++;
-	}
-	return result;
-}
+// 	while(input[i]!='\0')
+// 	{
+// 		int temp = input[i];
+// 		result += temp * pow(100,r);
+// 		r++;
+// 		i++;
+// 	}
+// 	return result;
+// }
 
 static struct data *array;
 static int capacity = 19997;
 
 int hashedValue(char* key)
 {
-	unsigned long long int result = string_to_int_convert(key);
+	long long int result = string_to_int(key);
 	return (result % capacity);
 }
 
-void initialize_map()
+void init_symtab()
 {
 	array = (struct data*) malloc(capacity * sizeof(struct data));
 	int i =0;
@@ -41,8 +42,23 @@ void initialize_map()
 		i++;
 	}
 }
+void get_symtable(FILE* fp)
+{
+	fseek(fp, 0, SEEK_SET);
 
-void insert_in_map(char* key, char* value)
+	init_symtab();
+	char label[30];
+	char address[5];
+	/* Reading line from file until EOF */
+	while(fscanf(fp,"%s %s",label, address)!=EOF)
+	{
+		/* Inserting symbols into hash table */
+		insert_in_symtab(label, address);
+	}
+}
+
+
+void insert_in_symtab(char* key, char* value)
 {
 	int index = hashedValue(key);
 	array[index].key = (char*)malloc(30 * sizeof(char));

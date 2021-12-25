@@ -18,7 +18,7 @@ void pass1(char* input_file)
 	get_optable(opt);
 
 	/* Creating the symbol hashtable */
-	get_symtable(sym);
+	init_symtab();
 
 	/* Initialising the location counter to 0 */
 	int locctr = 0, line_no = 1;

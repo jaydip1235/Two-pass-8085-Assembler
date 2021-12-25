@@ -7,42 +7,37 @@
 #include "../inc/hash_map_1.h"
 #include "../inc/hash_map_2.h"
 
-void get_optable(FILE* fp)
+long long int string_to_int(char* input)
 {
-	fseek(fp, 0, SEEK_SET);
-	int igr;
-	char mnemonic[10];
-	char opcode[3];
-	int length;
-
-	init_map();
-	/* Reading line from file until EOF */
-	while(fscanf(fp,"%d. %s %s %d",&igr,mnemonic,opcode,&length)!=EOF)
+	int i =0;
+	long long int result = 0;
+	int r = 0;
+	//printf("key is : %s\n",input);
+	while(input[i]!='\0')
 	{
-		/* Inserting opcodes into hash table */
-		struct opdata opd;
-		opd.length = length;
-		opd.opcode = (char*)malloc(sizeof(char) * 3);
-		strcpy(opd.opcode, opcode);
-		insert(mnemonic, &opd);
-
+		int temp = input[i];
+		result += temp*pow(10,r);
+		r++;
+		i++;	
 	}
+	return result;
 }
 
-void get_symtable(FILE* fp)
-{
-	fseek(fp, 0, SEEK_SET);
 
-	initialize_map();
-	char label[30];
-	char address[5];
-	/* Reading line from file until EOF */
-	while(fscanf(fp,"%s %s",label, address)!=EOF)
-	{
-		/* Inserting symbols into hash table */
-		insert_in_map(label, address);
-	}
-}
+// void get_symtable(FILE* fp)
+// {
+// 	fseek(fp, 0, SEEK_SET);
+
+// 	initialize_map();
+// 	char label[30];
+// 	char address[5];
+// 	/* Reading line from file until EOF */
+// 	while(fscanf(fp,"%s %s",label, address)!=EOF)
+// 	{
+// 		/* Inserting symbols into hash table */
+// 		insert_in_map(label, address);
+// 	}
+// }
 
 char* remove_char(char *line,char c)
 {
@@ -149,7 +144,7 @@ int insert_label(char* label, int locctr, FILE* fp)
 	else
 	{
 		char* loc_hex = to_hex(locctr);
-		insert_in_map(label, loc_hex);
+		insert_in_symtab(label, loc_hex);
 		fprintf(fp, "%s %s\n", label, loc_hex);
 		return 1;
 	}

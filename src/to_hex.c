@@ -21,15 +21,15 @@ char* to_hex(int n)
         //printf("temp %d\n", temp);
         if(temp < 10) 
         { 
-            hexa[i] = temp + 48; 
+            hexa[i] = temp + '0'; 
         } 
         else
         { 
-            hexa[i] = temp + 55; 
+            hexa[i] = temp-10 +'A'; 
         } 
          
         i--;  
-        n = n / 16; 
+        n /= 16; 
     } 
       
     // printing hexadecimal number array in reverse order 

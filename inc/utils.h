@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+long long int string_to_int(char*);
 void get_optable(FILE*);
 void get_symtable(FILE*);
 char* get_mnemonic(char *line);

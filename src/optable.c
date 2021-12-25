@@ -1,24 +1,9 @@
 #include "../inc/hash_map_1.h"
+#include "../inc/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
-long long int string_to_int(char* input)
-{
-	int i =0;
-	long long int result = 0;
-	int r = 0;
-	//printf("key is : %s\n",input);
-	while(input[i]!='\0')
-	{
-		int temp = input[i];
-		result += temp*pow(10,r);
-		r++;
-		i++;	
-	}
-	return result;
-}
 
 static struct opdata *array;
 static int capacity = 19997;
@@ -30,7 +15,7 @@ int hashCode(char* key)
 }
 
 
-void init_map()
+void init_optab()
 {
 	int i;
 	array = (struct opdata*) malloc(capacity * sizeof(struct opdata));
@@ -41,7 +26,29 @@ void init_map()
 	}
 }
 
-void insert(char* key, struct opdata* opd)
+void get_optable(FILE* fp)
+{
+	fseek(fp, 0, SEEK_SET);
+	int sl;
+	char mnemonic[10];
+	char opcode[3];
+	int length;
+
+	init_optab();
+	/* Reading line from file until EOF */
+	while(fscanf(fp,"%d. %s %s %d",&sl,mnemonic,opcode,&length)!=EOF)
+	{
+		/* Inserting opcodes into hash table */
+		struct opdata opd;
+		opd.length = length;
+		opd.opcode = (char*)malloc(sizeof(char) * 3);
+		strcpy(opd.opcode, opcode);
+		insert_in_optab(mnemonic, &opd);
+
+	}
+}
+
+void insert_in_optab(char* key, struct opdata* opd)
 {
 	int index = hashCode(key);
 	//printf("INDEX: %d\n", index);

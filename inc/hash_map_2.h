@@ -1,3 +1,4 @@
+#include <stdio.h>
 #ifndef HASHMAP2_H
 #define HASHMAP2_H
 
@@ -7,10 +8,10 @@ struct data{
 	int flag ;
 };
 
-void initialize_map();
+void init_symtab();
 
-void insert_in_map(char*, char*);
-
+void insert_in_symtab(char*, char*);
+void get_symtable(FILE*);
 char* get_value(char*);
 
 #endif
