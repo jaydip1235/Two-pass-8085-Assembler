@@ -1,0 +1,15 @@
+JC
+JNC
+JZ
+JNZ
+JPE
+JPO
+JM 
+JP
+JMP
+CNC
+CNZ
+CP
+CPE 
+CPO
+CZ
