@@ -3,7 +3,6 @@
 #include <math.h>
 #include <string.h>
 #include "../inc/utils.h"
-#include "../inc/to_hex.h"
 #include "../inc/hash_map_1.h"
 #include "../inc/hash_map_2.h"
 
@@ -22,29 +21,49 @@ long long int string_to_int(char* input)
 	}
 	return result;
 }
+char* to_hex(int n) 
+{   
 
+    if(n > 65535)
+    {
+        perror("Memory error"); 
+        return NULL;
+    }
 
-// void get_symtable(FILE* fp)
-// {
-// 	fseek(fp, 0, SEEK_SET);
+    // Char array to store hexadecimal number 
+    char* hexa = (char*)malloc(sizeof(char) * 5); 
 
-// 	initialize_map();
-// 	char label[30];
-// 	char address[5];
-// 	/* Reading line from file until EOF */
-// 	while(fscanf(fp,"%s %s",label, address)!=EOF)
-// 	{
-// 		/* Inserting symbols into hash table */
-// 		insert_in_map(label, address);
-// 	}
-// }
-
+    int i = 3; 
+    while(n != 0) 
+    {     
+        int temp  = n % 16; 
+        if(temp < 10) 
+        { 
+            hexa[i] = temp + '0'; 
+        } 
+        else
+        { 
+            hexa[i] = temp-10 +'A'; 
+        } 
+         
+        i--;  
+        n /= 16; 
+    } 
+      
+    // add preceeding zeros
+    for(int j = i; j >= 0; j--) 
+    {
+        hexa[j] = '0';
+    } 
+    hexa[4] = '\0';
+    return hexa;
+} 
 char* remove_char(char *line,char c)
 {
+	// removes c from line
 	char *line2;
 	int i=0,j=0,len;
 	len=strlen(line);
-	//printf("%d\n",len);
 	line2=(char*)malloc(len*sizeof(char));
 	for(i=0;i<len;i++)
 	{
@@ -61,11 +80,13 @@ char* get_mnemonic(char *line)
  	line5 = (char*)malloc(10*sizeof(char));
  	strcpy(line5, line);
 	line2=remove_char(line,' ');
-
+	//like mov a,b
 	if(get(line2) != NULL) {return line2;}
+	//get first token/word
 	char delim[]=" ";
 	line3=strtok(line5,delim);
 	if(get(line3) != NULL) {return line3;}
+	//for immediate addressing
 	char delim2[]=",";
 	line4=strtok(line2,delim2);
 	if(get(line4) != NULL) {return line4;}
@@ -76,10 +97,9 @@ char* get_mnemonic(char *line)
 }
 
 char* read_line(FILE* fp)
-{
-	int bufsize = 1024;
+{	//returns a line from the input file
 	int pos = 0;
-	char* buff = (char*)malloc(sizeof(char) * bufsize);
+	char* buff = (char*)malloc(sizeof(char) * 200);
 	char ch = getc(fp);
 	while(ch != '\n' && ch != EOF)
 	{
@@ -93,20 +113,21 @@ char* read_line(FILE* fp)
 
 char* check_label(char* line)
 {
-	int f = 0; // Flag indicating whether label exists
+	//returns the label if the line starts with a label else NULL
+	int flag = 0; // Flag indicating whether label exists
 	int pos;
-	/*  Checking for label */
+	// mark flag true if : is found and update pos as the index of the ':'
 	for(int i = 0; line[i] != '\0'; i++)
 	{
 		if(line[i] == ':')
 		{
 			pos = i;
-			f = 1;
+			flag = 1;
 			break; 
 		}
 	}
 
-	if(f == 1)
+	if(flag)
 	{
 		int i;
 		/* Storing the label */

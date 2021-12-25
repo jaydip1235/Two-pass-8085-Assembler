@@ -2,6 +2,7 @@
 #define UTILS_H
 
 long long int string_to_int(char*);
+char* to_hex(int);
 void get_optable(FILE*);
 void get_symtable(FILE*);
 char* get_mnemonic(char *line);

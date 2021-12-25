@@ -16,7 +16,6 @@ void pass1(char* input_file)
 
 	/* Creating the opcode hashtable */
 	get_optable(opt);
-
 	/* Creating the symbol hashtable */
 	init_symtab();
 
@@ -44,7 +43,6 @@ void pass1(char* input_file)
 	
 		/* Extract the mnemonic from the line */	
 		char* mnemonic = get_mnemonic(line);
-
 		/* If mnemonic exists update the location counter */
 		if(mnemonic == NULL)
 		{
