@@ -2,6 +2,7 @@
 #include "../inc/pass2.h"
 #include <stdio.h>
 #include <string.h>
+
 int main()
 {
 	char ip[50];
