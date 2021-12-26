@@ -8,10 +8,10 @@
 
 long long int string_to_int(char* input)
 {
+	//int generated from string for hashing
 	int i =0;
 	long long int result = 0;
 	int r = 0;
-	//printf("key is : %s\n",input);
 	while(input[i]!='\0')
 	{
 		int temp = input[i];
@@ -21,18 +21,16 @@ long long int string_to_int(char* input)
 	}
 	return result;
 }
+//generate hexadecimal string from decimal int
 char* to_hex(int n) 
 {   
-
     if(n > 65535)
     {
         perror("Memory error"); 
         return NULL;
     }
-
     // Char array to store hexadecimal number 
     char* hexa = (char*)malloc(sizeof(char) * 5); 
-
     int i = 3; 
     while(n != 0) 
     {     
@@ -73,6 +71,7 @@ char* remove_char(char *line,char c)
 	return line2;
 }
 
+//extract mnemonic from line
 char* get_mnemonic(char *line)
 {
 	
@@ -154,14 +153,13 @@ char* check_label(char* line)
 	}
 }
 
+//call insert in symbtab and write to the file : symtab.txt
 int insert_label(char* label, int locctr, FILE* fp)
 {
-	//cout << "Label: " << label << endl;
-	if(get_value(label) != NULL)
+	if(get_value(label) != NULL)	//invalid label
 	{
 		return 0;
 	}
-
 	else
 	{
 		char* loc_hex = to_hex(locctr);
@@ -171,6 +169,8 @@ int insert_label(char* label, int locctr, FILE* fp)
 	}
 }
 
+//checks if the mnemonic is the type to have labels like
+//jump statements
 int has_label(char* mnemonic, FILE* fp)
 {
 	fseek(fp, 0, SEEK_SET);
@@ -186,6 +186,7 @@ int has_label(char* mnemonic, FILE* fp)
 	return 0;
 }
 
+//extract the operands from a line after the mnemonic
 char* get_operand(char* line, char* mnemonic)
 {
 	char* line2 = remove_char(line, ' ');
@@ -205,7 +206,8 @@ char* get_operand(char* line, char* mnemonic)
 
 	return operand;
 }
-
+//checks if string op is a valid hexadecimal string and remove the h/H
+//if valid returns true
 int is_hexa_and_remove_h(char *op)
 {
 	if(strlen(op) != 0)
@@ -224,7 +226,8 @@ int is_hexa_and_remove_h(char *op)
 	}
 	return 1;
 }
-
+//operand is valid if the operand is in hex and if its length is 
+//the length of instruction mnemonic - 1 no. of of bytes
 int is_valid_operand(char *operand,int length)
 {
 	int h=is_hexa_and_remove_h(operand);
@@ -232,6 +235,7 @@ int is_valid_operand(char *operand,int length)
 	return (2*length==strlen(operand));
 }
 
+//get multiple operands
 char **get_operands(char *operand,int length)
 {
 	char **opr;

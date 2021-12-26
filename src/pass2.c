@@ -20,26 +20,21 @@ void pass2(char* input_file)
 
 	/* Getting the opcode hashtable */
 	get_optable(opt);
-
 	/* Getting the symbol table */
 	get_symtable(sym);
 
 	int line_no = 1;
+	//read the instructions line by line
 	while(!feof(inp))
 	{
 		char* line = read_line(inp);
 		
-		if(feof(inp))
-			break;
-
-		/* Removing label from line if any */
+		if(feof(inp)) break;
+		/* Remove label if any */
 		check_label(line);
-
 		/* Extract the mnemonic from the line */
 		char* mnemonic = get_mnemonic(line);
-
 		struct opdata* s = get(mnemonic);
-
 		strcpy(objcode[loc], s->opcode);
 		loc++;
 		
@@ -51,24 +46,24 @@ void pass2(char* input_file)
 		else
 		{
 			char* operand = get_operand(line, mnemonic);
-
 			if(has_label(mnemonic, lbl))
 			{
+				//get the address of the symbol from symtab
 				char* op = get_value(operand);
+				//operand is the 2 byte address
 				strcpy(operand, op); 
 			}
-
+			//check if operand length and operand(s) are valid
 			if(is_valid_operand(operand, s->length - 1))
 			{
 				char** operands = get_operands(operand, s->length - 1);
-
 				for(int i = 0 ; i < s->length - 1; i++)
 				{
 					strcpy(objcode[loc], operands[i]);
 					loc++;
 				}
 			}
-			else
+			else	//failure in assembly
 			{
 				success = 0;
 				printf("ERROR: Line %d: Invalid operands!!\n", line_no);
@@ -80,15 +75,16 @@ void pass2(char* input_file)
 		line_no++;
 	}
 
-	if(success == 1)
+	if(success == 1)	//if no error found 
 	{
 		for(int i = 0; i < loc; i++)
 		{
-			printf("%s\n", objcode[i]);
+			//write to output.txt the object codes in hex
 			fprintf(out, "%s\n", objcode[i]);
 		}
+		printf("Object code generated...stored in output.txt\n");
 	}
-	
+	//close all the files
 	fclose(opt);
 	fclose(sym);
 	fclose(inp);

@@ -14,26 +14,21 @@ void pass1(char* input_file)
 	FILE* sym = fopen("../data/symtable.txt", "w");
 	FILE* inp = fopen(input_file, "r");
 
-	/* Creating the opcode hashtable */
-	get_optable(opt);
-	/* Creating the symbol hashtable */
-	init_symtab();
+	get_optable(opt);	//Creating the hashtable for storing opcodes
+	init_symtab();			/* Create an empty symtab */
 
 	/* Initialising the location counter to 0 */
 	int locctr = 0, line_no = 1;
 
-	/* Loop to read instructions from the input file */
+	/* Read instructions from the input file line by line*/
 	while(!feof(inp))
 	{
 		char *line, *label;
-
-		/* Reading line from the input file */
 		line = read_line(inp); 
 
-		if(feof(inp))
-			break;
+		if(feof(inp)) 	break;
 
-		/* Check whether a label exists in the line */
+		/* Check if the line starts with label and whether the label is valid or not*/
 		if(label = check_label(line)) 
 		{
 			/* Insert the label in the symbol table */
@@ -41,7 +36,7 @@ void pass1(char* input_file)
 				printf("ERROR: Line %d: Label already exists!!\n", line_no);
 		}
 	
-		/* Extract the mnemonic from the line */	
+		/* Extract the instruction mnemonic from line */	
 		char* mnemonic = get_mnemonic(line);
 		/* If mnemonic exists update the location counter */
 		if(mnemonic == NULL)

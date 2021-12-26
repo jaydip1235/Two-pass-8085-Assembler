@@ -5,22 +5,6 @@
 #include "../inc/hash_map_2.h"
 #include "../inc/utils.h"
 
-// unsigned long long int string_to_int_convert(char* input)
-// {
-// 	int i =0;
-// 	unsigned long long int result = 0;
-// 	int r = 0;
-	
-// 	while(input[i]!='\0')
-// 	{
-// 		int temp = input[i];
-// 		result += temp * pow(100,r);
-// 		r++;
-// 		i++;
-// 	}
-// 	return result;
-// }
-
 static struct data *array;
 static int capacity = 19997;
 
@@ -29,7 +13,7 @@ int hashedValue(char* key)
 	long long int result = string_to_int(key);
 	return (result % capacity);
 }
-
+//initialize the symtab with null values and flags as 0
 void init_symtab()
 {
 	array = (struct data*) malloc(capacity * sizeof(struct data));
@@ -52,11 +36,12 @@ void get_symtable(FILE* fp)
 	/* Reading line from file until EOF */
 	while(fscanf(fp,"%s %s",label, address)!=EOF)
 	{
-		/* Inserting symbols into hash table */
+		/* Inserting each symbol into hash table */
 		insert_in_symtab(label, address);
 	}
 }
 
+//inserts a symbol : takes label name and label location as arguments
 
 void insert_in_symtab(char* key, char* value)
 {
@@ -67,7 +52,8 @@ void insert_in_symtab(char* key, char* value)
 	strcpy(array[index].value,value);
 	array[index].flag = 1;
 }
-
+//given a label returns its address/value if present in the symtab; 
+//else returns NULL
 char* get_value(char* key)
 {
 	int index = hashedValue(key);
