@@ -1,14 +1,16 @@
 # Two-pass-8085-Assembler
 ## Team Members
-  ➣ [Saptarshi Rakshit](https://github.com/saphere9)
+## Team Members
 
-  ➣ [Koushan De](https://github.com/KoushanDe)
+  ➣ [Koushan De](https://github.com/KoushanDe) (Roll-001910501008)
+  
+  ➣ [Saptarshi Rakshit](https://github.com/saphere9) (Roll-001910501009)
 
-  ➣ [Jaydip Dey](https://github.com/jaydip1235)
+  ➣ [Jaydip Dey](https://github.com/jaydip1235) (Roll-001910501014)
 
-  ➣[ Soumita Paul](https://github.com/myiotuhris)
+  ➣ [Shakeeb Ilmi Noor](https://github.com/ShakeebIlmiNoor) (Roll-001910501028)
 
-  ➣ [Shakeeb Ilmi Noor](https://github.com/ShakeebIlmiNoor)
+  ➣[ Soumita Paul](https://github.com/myiotuhris) (Roll-001910501029)
 
 ## 8085 ARCHITECTURE
     8085 is an 8-bit microprocessor, designed by Intel in1977. 
@@ -76,7 +78,7 @@
 ## Output
 
 ### Console output
-[![outp.jpg](https://i.postimg.cc/Y94Xy4hm/outp.jpg)](https://postimg.cc/R6BQWZ1M)
+[![blur.png](https://i.postimg.cc/nV7hm00q/blur.png)](https://postimg.cc/3W8h5CMw)
 ### Object code
 [![obcode.jpg](https://i.postimg.cc/W3tKLWfz/obcode.jpg)](https://postimg.cc/LYKvjTSF)
 
