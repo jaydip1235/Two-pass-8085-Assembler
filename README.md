@@ -69,7 +69,7 @@
 
 ## RUNNING THE ASSEMBLER
     For compilation:
-      gcc optable.c symtable.c to_hex.c utils.c pass1.c pass2.c
+      gcc optable.c symtable.c utils.c pass1.c pass2.c
       2-pass-assembler.c -o assembler
 
     To run the assembler on Windows, go to the Assembler/src and
