@@ -41,6 +41,7 @@ void get_symtable(FILE* fp)
 	}
 }
 
+//inserts a symbol : takes label name and label location as arguments
 
 void insert_in_symtab(char* key, char* value)
 {
@@ -51,7 +52,8 @@ void insert_in_symtab(char* key, char* value)
 	strcpy(array[index].value,value);
 	array[index].flag = 1;
 }
-
+//given a label returns its address/value if present in the symtab; 
+//else returns NULL
 char* get_value(char* key)
 {
 	int index = hashedValue(key);

@@ -14,7 +14,7 @@ int hashCode(char* key)
 	return (result % capacity);
 }
 
-
+//initialize a hashtable for storing opcodes of mnemonics
 void init_optab()
 {
 	int i;
@@ -26,6 +26,8 @@ void init_optab()
 	}
 }
 
+//fp is the file containing the opcodes for mnemonics
+//generates the optable
 void get_optable(FILE* fp)
 {
 	fseek(fp, 0, SEEK_SET);
@@ -48,10 +50,10 @@ void get_optable(FILE* fp)
 	}
 }
 
+//given a struct opdata stores in the optable
 void insert_in_optab(char* key, struct opdata* opd)
 {
 	int index = hashCode(key);
-	//printf("INDEX: %d\n", index);
 	if(array[index].length == 0)
 	{
 		array[index].length = opd->length;
@@ -60,6 +62,7 @@ void insert_in_optab(char* key, struct opdata* opd)
 	}
 }
 
+//given a mnemonic returns its opcode if present in the optab; 
 struct opdata* get(char* key)
 {
 	int index = hashCode(key);

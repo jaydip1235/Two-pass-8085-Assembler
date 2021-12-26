@@ -48,9 +48,12 @@ void pass2(char* input_file)
 			char* operand = get_operand(line, mnemonic);
 			if(has_label(mnemonic, lbl))
 			{
+				//get the address of the symbol from symtab
 				char* op = get_value(operand);
+				//operand is the 2 byte address
 				strcpy(operand, op); 
 			}
+			//check if operand length and operand(s) are valid
 			if(is_valid_operand(operand, s->length - 1))
 			{
 				char** operands = get_operands(operand, s->length - 1);
@@ -60,7 +63,7 @@ void pass2(char* input_file)
 					loc++;
 				}
 			}
-			else
+			else	//failure in assembly
 			{
 				success = 0;
 				printf("ERROR: Line %d: Invalid operands!!\n", line_no);
